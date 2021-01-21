@@ -1,14 +1,14 @@
-import React from "react";
+ import * as React from "react";
 import { Layout } from "antd";
 
 
 import "antd/dist/antd.css";
-import NavLink from "react-router-dom/NavLink";
+import { NavLink } from "react-router-dom";
 
 const { Header } = Layout;
 
 
-let Home = () => {
+let Home = (): any => {
 
     return <Layout>
         <Header>

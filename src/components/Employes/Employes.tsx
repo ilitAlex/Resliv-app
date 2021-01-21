@@ -1,11 +1,19 @@
-import React from "react";
+import * as React from "react";
 import axios from "axios";
 import { Layout, Input, Button, List } from "antd";
+import {FormEvent} from "react";
 
-const {  Content } = Layout;
+const { Content } = Layout;
 
 
-const User = ({first_name, deleteUser}) => (
+interface IUsers {
+    first_name: string,
+    deleteUser: () => void
+}
+
+const User : React.FC<IUsers> = ({first_name, deleteUser}) => (
+
+
     <>
         <h4>{first_name}</h4>
         <Button onClick={deleteUser} size="small">delete user</Button>
@@ -20,13 +28,25 @@ const data = [
 
 ];
 
-class Emloyes extends React.Component {
 
-    constructor(props) {
+
+type EmployesType = {
+    users: any[],
+    value: string,
+    usersOnPage: number,
+}
+
+
+class Emloyes extends React.Component <{}, EmployesType> {
+
+
+    constructor(props: any) {
         super(props);
         this.state = {
             users: [],
+            value: "",
             usersOnPage: 12,
+            
         };
         this.changeAddUser = this.changeAddUser.bind(this);
         this.submitAddUser = this.submitAddUser.bind(this);
@@ -44,20 +64,19 @@ class Emloyes extends React.Component {
     };
 
 
-    deleteUser = index => this.setState({
+    deleteUser = (index: number) => this.setState({
         users: this.state.users.filter((user, i) => i !== index)
     });
 
-    changeAddUser(event) {
-        this.setState({value: event.target.value});
+    changeAddUser(event: { target: HTMLInputElement; }) {
+        this.setState({value: (event.target.value)});
     };
 
 
-    submitAddUser(event) {
+    submitAddUser(event: FormEvent) {
         this.setState({users: [...this.state.users, {first_name: this.state.value}]});
         event.preventDefault();
-        const form = event.target
-        form.reset();
+        this.setState({value: ""})
     };
 
     render() {
@@ -67,8 +86,11 @@ class Emloyes extends React.Component {
             <Content>
 
                 <div>
+                    <form onSubmit={this.submitAddUser}>
+                        <Input style={{ width: 200, margin: '10px 10px'  }} type="text" value={this.state.value} onChange={this.changeAddUser}/>
+                        <Input style={{ width: 200, margin: '0 10px' }} type="submit" value="add user"/>
+                    </form>
                     {this.state.users.map((user, index) => (
-
                         <List
                             grid={{ gutter: 16, column: 3 }}
                             dataSource={data}
@@ -80,17 +102,11 @@ class Emloyes extends React.Component {
                                 </List.Item>
                             )}
                         />
-
                     ))}
-                    <form onSubmit={this.submitAddUser}>
-                        <Input style={{ width: 200, margin: '0 10px' }} type="text" onChange={this.changeAddUser}/>
-                        <Input style={{ width: 200, margin: '0 10px' }} type="submit" value="add user"/>
-                    </form>
+
                 </div>
             </Content>
         </Layout>
-
-
     }
 };
 
