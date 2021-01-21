@@ -1,9 +1,12 @@
-The app: http://ilitAlex.github.io/Resliv-app
+The app:   http://ilitAlex.github.io/Resliv-app
+
 
 Technologes I used: TypeScript, React, axios, 'reqres.in' API, React UI library 'ant', 'react-gh-pages'-package.
 
 
-The task is: 
+
+
+Task description from the customer: 
 С использованием библиотеки React реализовать приложение, которое умеет
 показывать следующие страницы:
 
